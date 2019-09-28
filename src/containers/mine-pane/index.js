@@ -1,6 +1,6 @@
 import React from 'react'
+import styled from 'styled-components'
 import Square from 'components/square'
-import './index.scss'
 import initMinePane from 'data/mine-pane'
 
 export default function MinewPane() {
@@ -15,9 +15,17 @@ export default function MinewPane() {
     items.push(<Square key={i} />)
   }
 
+  const Pane = styled.div`
+    display: grid;
+    grid-template-columns: repeat(${ROW}, 30px);
+    grid-template-rows: repeat(${ROW}, 30px);
+    justify-content: center;
+    margin: 100px auto;
+  `
+
   return (
-    <div className="mine-pane">
+    <Pane>
       {items}
-    </div>
+    </Pane>
   )
 }

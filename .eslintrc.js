@@ -22,7 +22,7 @@ module.exports = {
       "semi": ["error", "never"],
       "quotes": ["error", "single"],
       "comma-dangle": ["error", "never"],
-      "no-plusplus": "off"
+      "no-plusplus": "off",
     },
     "settings": {
       "import/resolver": {
