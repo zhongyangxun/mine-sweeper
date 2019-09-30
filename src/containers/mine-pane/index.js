@@ -5,14 +5,18 @@ import initMinePane from 'data/mine-pane'
 
 export default function MinewPane() {
   const ROW = 9
-  const MINE_NUM = 10
+  const MINE_NUM = 16
 
-  initMinePane(ROW, MINE_NUM)
+  const minePane = initMinePane(ROW, MINE_NUM)
 
   const items = []
 
-  for (let i = 0; i < ROW * ROW; i++) {
-    items.push(<Square key={i} />)
+  for (let i = 0; i < ROW; i++) {
+    for (let j = 0; j < ROW; j++) {
+      items.push(
+        <Square key={i * ROW + j} roundMineNum={minePane[i][j]} />
+      )
+    }
   }
 
   const Pane = styled.div`
@@ -22,7 +26,6 @@ export default function MinewPane() {
     justify-content: center;
     margin: 100px auto;
   `
-
   return (
     <Pane>
       {items}

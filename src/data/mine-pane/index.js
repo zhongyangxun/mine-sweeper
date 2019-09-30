@@ -53,7 +53,7 @@ function initMinePane(row, mineNum) {
 
   const mineIndexs = getMineIndexs(row, mineNum)
   pane = putMines(pane, row, mineIndexs)
-  window.console.log('pane', pane)
+  return pane
 }
 
 export default initMinePane

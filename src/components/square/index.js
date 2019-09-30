@@ -1,8 +1,12 @@
 import React from 'react'
 import './index.scss'
 
-export default function Square() {
+function handleSquareClick(roundMineNum) {
+  console.log(roundMineNum)
+}
+
+export default function Square(props) {
   return (
-    <div className="square" />
+    <div className="square" onClick={() => { handleSquareClick(props.roundMineNum) }} />
   )
 }
