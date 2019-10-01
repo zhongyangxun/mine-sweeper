@@ -1,4 +1,51 @@
 .square {
   background-color: #C0C0C0;
-  border: 1px solid;
+  border: 2px outset;
+  display: flex;
+
+  &.marked {
+    background-image: url(./images/flag.svg);
+    background-size: 100%;
+  }
+
+  &.open {
+    background-image: none;
+    border: 1px inset;
+  }
+
+  .mine-mark {
+    $color1: #0000FF;
+    $color2: #008000;
+    $color3: #FF0000;
+    $color4: #000080;
+
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+
+    &.hide {
+      display: none;
+    }
+
+    &.mine-mark-m {
+      background: red url(./images/boom.svg) center center/70% no-repeat;
+      color: transparent;
+    }
+
+    &.mine-mark-1 {
+      color: $color1;
+    }
+
+    &.mine-mark-2 {
+      color: $color2;
+    }
+
+    &.mine-mark-3 {
+      color: $color4;
+    }
+
+    &.mine-mark-4 {
+      color: $color4;
+    }
+  }
 }

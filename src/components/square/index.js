@@ -1,19 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
 import './index.scss'
 
 function Square(props) {
-  const mineMarkDisplay = props.open ? 'block' : 'none'
-  const MineMarkWrapper = styled.div`
-    display: ${mineMarkDisplay};
-    text-align: center;
-  `
+  const mineMarkDisplay = (!props.open || props.mineMark === 0) && 'hide'
+  const mineMarkClass = props.open && `mine-mark-${props.mineMark}`
+
   return (
-    <div className="square" onClick={() => { props.onSquareClick() }} >
-      <MineMarkWrapper>
+    <div
+      className = { `square ${props.open && 'open'} ${props.marked && 'marked'}` }
+      onClick={() => { props.onSquareClick() }}
+      onContextMenu={(e) => { props.onSquareContextMenu(e) }}
+    >
+      <div className={`mine-mark ${mineMarkDisplay} ${mineMarkClass}`}>
         {props.mineMark}
-      </MineMarkWrapper>
+      </div>
     </div>
   )
 }
@@ -24,12 +25,15 @@ Square.propTypes = {
     PropTypes.string
   ]),
   onSquareClick: PropTypes.func,
-  open: PropTypes.bool
+  open: PropTypes.bool,
+  marked: PropTypes.bool,
+  onSquareContextMenu: PropTypes.func
 }
 
 Square.defaultProps = {
   mineMark: 0,
-  open: false
+  open: false,
+  marked: false
 }
 
 export default Square
