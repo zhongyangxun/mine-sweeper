@@ -3,9 +3,11 @@
   border: 2px outset;
   display: flex;
 
-  &.marked {
-    background-image: url(./images/flag.svg);
-    background-size: 100%;
+  @each $mark in (flag, question) {
+    &.mark-#{$mark} {
+      background-image: url('./images/#{$mark}.svg');
+      background-size: 100%;
+    }
   }
 
   &.open {

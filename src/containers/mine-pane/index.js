@@ -2,25 +2,27 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Square from 'components/square'
-import initMinePane from 'data/mine-pane'
+import { initMinePane, initMinePaneState } from 'data/mine-pane'
 
 class MinePane extends React.Component {
   static propTypes = {
     rowNum: PropTypes.number,
-    mineNum: PropTypes.number
+    mineNum: PropTypes.number,
+    onGameStart: PropTypes.func,
+    onGameEnd: PropTypes.func,
+    playing: PropTypes.bool
   }
 
   static defaultProps = {
     rowNum: 9,
-    mineNum: 10
+    mineNum: 16,
+    playing: false
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      minePane: initMinePane(props.rowNum, props.mineNum),
-      openFlags: this.initopenFlags(props.rowNum),
-      markFlags: this.initMarkFlags(props.rowNum)
+      minePane: initMinePaneState(initMinePane(props.rowNum, props.mineNum))
     }
   }
 
@@ -71,46 +73,63 @@ class MinePane extends React.Component {
     }
   }
 
-  open(i, j, bubble = true) {
-    const row = this.state.openFlags[i]
+  isPositionInPane(i, j) {
+    const row = this.state.minePane[i]
+    return row !== undefined && row[j] !== undefined
+  }
 
-    if (row === undefined || row[j] === undefined || row[j]) {
+  open(i, j, bubble = true) {
+    if (!this.isPositionInPane(i, j) || this.state.minePane[i][j].open) {
       return
     }
 
     this.setState((prevState) => {
-      const { openFlags } = prevState
-      openFlags[i][j] = true
+      const { minePane } = prevState
+      minePane[i][j].open = true
 
       return {
-        openFlags
+        minePane
       }
     }, () => {
       const { minePane } = this.state
-      const square = minePane[i][j]
+      const square = minePane[i][j].value
       if (bubble && square === 0) {
         this.openAround(i, j)
       }
     })
   }
 
+  endGame() {
+    this.openAll()
+    this.props.onGameEnd()
+  }
+
   mark(i, j) {
-    const row = this.state.markFlags[i]
+    const { minePane } = this.state
+    let itemMark = minePane[i][j].mark
 
-    if (row === undefined || row[j] === undefined || row[j]) {
-      return
+    if (itemMark === null) {
+      itemMark = 'flag'
+    } else if (itemMark === 'flag') {
+      itemMark = 'question'
+    } else if (itemMark === 'question') {
+      itemMark = null
     }
+    minePane[i][j].mark = itemMark
 
-    const { markFlags } = this.state
-    markFlags[i][j] = true
     this.setState({
-      markFlags
+      minePane
     })
   }
 
   handleSquareClick(i, j) {
-    if (this.state.minePane[i][j] === 'm') {
-      this.openAll()
+    if (this.state.minePane[i][j].value === 'm') {
+      this.endGame()
+      return
+    }
+
+    if (!this.props.playing) {
+      this.props.onGameStart()
     }
 
     this.open(i, j)
@@ -118,6 +137,10 @@ class MinePane extends React.Component {
 
   handleSquareContextMenu(i, j, e) {
     e.preventDefault()
+
+    if (!this.props.playing) {
+      this.props.onGameStart()
+    }
     this.mark(i, j)
   }
 
@@ -125,12 +148,11 @@ class MinePane extends React.Component {
     const items = []
     for (let i = 0; i < this.props.rowNum; i++) {
       for (let j = 0; j < this.props.rowNum; j++) {
+        const squareProps = this.state.minePane[i][j]
         items.push(
           <Square
+            {...squareProps}
             key={i * this.props.rowNum + j}
-            mineMark={this.state.minePane[i][j]}
-            open={this.state.openFlags[i][j]}
-            marked={this.state.markFlags[i][j]}
             onSquareClick={() => { this.handleSquareClick(i, j) }}
             onSquareContextMenu={(e) => { this.handleSquareContextMenu(i, j, e) }}
           />
@@ -146,9 +168,11 @@ class MinePane extends React.Component {
       margin: 100px auto;
     `
     return (
-      <Pane>
-        {items}
-      </Pane>
+      <div className="mine-pane">
+        <Pane>
+          {items}
+        </Pane>
+      </div>
     )
   }
 }

@@ -31,7 +31,8 @@ module.exports = {
           map: [
             ["components", "./src/components"],
             ["containers", "./src/containers"],
-            ["data", "./src/data"]
+            ["data", "./src/data"],
+            ["common", "./src/common"]
           ],
         }
       }

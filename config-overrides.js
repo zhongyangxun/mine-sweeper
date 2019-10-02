@@ -7,7 +7,8 @@ module.exports = function override(config) {
       alias: {
         components: path.resolve(__dirname, 'src/components'),
         containers: path.resolve(__dirname, 'src/containers'),
-        data: path.resolve(__dirname, 'src/data')
+        data: path.resolve(__dirname, 'src/data'),
+        common: path.resolve(__dirname, 'src/common')
       }
     }
   }

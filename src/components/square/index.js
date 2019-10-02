@@ -3,37 +3,37 @@ import PropTypes from 'prop-types'
 import './index.scss'
 
 function Square(props) {
-  const mineMarkDisplay = (!props.open || props.mineMark === 0) && 'hide'
-  const mineMarkClass = props.open && `mine-mark-${props.mineMark}`
+  const mineMarkDisplay = (!props.open || props.value === 0) && 'hide'
+  const mineMarkClass = props.open && `mine-mark-${props.value}`
 
   return (
     <div
-      className = { `square ${props.open && 'open'} ${props.marked && 'marked'}` }
+      className = { `square ${props.open && 'open'} mark-${props.mark}` }
       onClick={() => { props.onSquareClick() }}
       onContextMenu={(e) => { props.onSquareContextMenu(e) }}
     >
       <div className={`mine-mark ${mineMarkDisplay} ${mineMarkClass}`}>
-        {props.mineMark}
+        {props.value}
       </div>
     </div>
   )
 }
 
 Square.propTypes = {
-  mineMark: PropTypes.oneOfType([
+  value: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string
   ]),
   onSquareClick: PropTypes.func,
   open: PropTypes.bool,
-  marked: PropTypes.bool,
+  mark: PropTypes.string,
   onSquareContextMenu: PropTypes.func
 }
 
 Square.defaultProps = {
-  mineMark: 0,
+  value: 0,
   open: false,
-  marked: false
+  mark: null
 }
 
 export default Square
