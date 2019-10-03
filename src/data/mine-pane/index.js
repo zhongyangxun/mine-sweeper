@@ -68,9 +68,10 @@ function initMinePaneState(minePane = []) {
     paneState[i] = (new Array(row.length)).fill({})
     for (let j = 0; j < row.length; j++) {
       const item = {
+        id: i * row.length + j,
         value: minePane[i][j],
         mark: null,
-        open: false
+        open: false,
       }
       paneState[i][j] = item
     }

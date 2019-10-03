@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
 import Square from 'components/square'
 import { initMinePane, initMinePaneState } from 'data/mine-pane'
+import './index.scss'
 
 class MinePane extends React.Component {
   static propTypes = {
@@ -24,30 +24,6 @@ class MinePane extends React.Component {
     this.state = {
       minePane: initMinePaneState(initMinePane(props.rowNum, props.mineNum))
     }
-  }
-
-  initopenFlags(row = this.props.rowNum) {
-    const openFlags = []
-    for (let i = 0; i < row; i++) {
-      openFlags[i] = []
-      for (let j = 0; j < row; j++) {
-        openFlags[i][j] = false
-      }
-    }
-
-    return openFlags
-  }
-
-  initMarkFlags(row = this.props.rowNum) {
-    const markFlags = []
-    for (let i = 0; i < row; i++) {
-      markFlags[i] = []
-      for (let j = 0; j < row; j++) {
-        markFlags[i][j] = false
-      }
-    }
-
-    return markFlags
   }
 
   openAround(i, j) {
@@ -145,33 +121,29 @@ class MinePane extends React.Component {
   }
 
   render() {
-    const items = []
-    for (let i = 0; i < this.props.rowNum; i++) {
-      for (let j = 0; j < this.props.rowNum; j++) {
-        const squareProps = this.state.minePane[i][j]
-        items.push(
-          <Square
-            {...squareProps}
-            key={i * this.props.rowNum + j}
-            onSquareClick={() => { this.handleSquareClick(i, j) }}
-            onSquareContextMenu={(e) => { this.handleSquareContextMenu(i, j, e) }}
-          />
-        )
-      }
+    const paneGridStyle = {
+      display: 'grid',
+      gridTemplateColumns: `repeat(${this.props.rowNum}, 30px)`,
+      gridTemplateRows: `repeat(${this.props.rowNum}, 30px)`
     }
 
-    const Pane = styled.div`
-      display: grid;
-      grid-template-columns: repeat(${this.props.rowNum}, 30px);
-      grid-template-rows: repeat(${this.props.rowNum}, 30px);
-      justify-content: center;
-      margin: 100px auto;
-    `
     return (
-      <div className="mine-pane">
-        <Pane>
-          {items}
-        </Pane>
+      <div
+        className={`mine-pane row-${this.props.rowNum}`}
+        style={paneGridStyle}
+      >
+          {
+            this.state.minePane.map((row, rowIndex) => row.map((item, itemIndex) => (
+                < Square
+                  key={item.id}
+                  {...item}
+                  onSquareClick={() => { this.handleSquareClick(rowIndex, itemIndex) }}
+                  onSquareContextMenu={(e) => {
+                    this.handleSquareContextMenu(rowIndex, itemIndex, e)
+                  }}
+                />
+            )))
+          }
       </div>
     )
   }
