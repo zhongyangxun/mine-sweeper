@@ -134,7 +134,7 @@ class MinePane extends React.Component {
       >
           {
             this.state.minePane.map((row, rowIndex) => row.map((item, itemIndex) => (
-                < Square
+              <Square
                   key={item.id}
                   {...item}
                   onSquareClick={() => { this.handleSquareClick(rowIndex, itemIndex) }}
