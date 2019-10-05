@@ -50,8 +50,8 @@ Square.defaultProps = {
   mark: null
 }
 
-const areEqual = (prevProps, nextProps) => {
-  return (prevProps.open === nextProps.open && prevProps.mark === nextProps.mark)
-}
+const areEqual = (prevProps, nextProps) => (
+  prevProps.open === nextProps.open && prevProps.mark === nextProps.mark
+)
 
 export default React.memo(Square, areEqual)

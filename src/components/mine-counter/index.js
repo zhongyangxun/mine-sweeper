@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Board from 'components/board'
+import { paddingZero } from 'common/util'
 
 function MineCounter(props) {
   return (
@@ -23,7 +24,7 @@ MineCounter.defaultProps = {
 }
 
 const mapStateToProps = (state) => ({
-  content: state.rowNum
+  content: paddingZero(state.mineNum)
 })
 
 export default connect(mapStateToProps)(MineCounter)

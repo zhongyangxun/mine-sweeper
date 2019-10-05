@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Square from 'components/square'
 import * as actions from 'store/action-creators'
 import { initMinePane, initMinePaneState } from 'data/mine-pane'
-import { markTypes } from './config'
+import { markTypes, MINE_SIGN } from './config'
 import './index.scss'
 
 class MinePane extends React.Component {
@@ -115,7 +115,7 @@ class MinePane extends React.Component {
   }
 
   handleSquareClick(i, j) {
-    if (this.state.minePane[i][j].value === 'm') {
+    if (!this.isMarked(i, j) && this.state.minePane[i][j].value === MINE_SIGN) {
       this.endGame()
       return
     }

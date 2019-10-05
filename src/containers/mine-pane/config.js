@@ -3,4 +3,6 @@ const markTypes = {
   QUESTION: 'question'
 }
 
-export { markTypes }
+const MINE_SIGN = 'm'
+
+export { markTypes, MINE_SIGN }

@@ -34,8 +34,8 @@ class App extends React.Component {
           <div className="panel">
             <div className="status">
               <MineCounter />
-              <TimeBoard timing={this.state.playing} />
               <div className="result"></div>
+              <TimeBoard timing={this.state.playing} />
             </div>
             <MinePane
               onGameStart={() => { this.handleGameStart() }}

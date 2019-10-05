@@ -6,4 +6,22 @@
 .app {
   max-width: 600px;
   margin: 60px auto;
+
+  .panel {
+    background-color: #C0C0C0;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  .status {
+    display: flex;
+    background-color: inherit;
+    justify-content: space-evenly;
+    padding: 15px;
+    border: 2px outset;
+    margin-bottom: 20px;
+  }
 }
