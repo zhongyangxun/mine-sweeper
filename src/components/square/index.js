@@ -50,7 +50,7 @@ Square.defaultProps = {
   mark: null
 }
 
-function areEqual(prevProps, nextProps) {
+const areEqual = (prevProps, nextProps) => {
   return (prevProps.open === nextProps.open && prevProps.mark === nextProps.mark)
 }
 

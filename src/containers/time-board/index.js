@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import CountBoard from 'components/count-board'
+import Board from 'components/board'
 import { paddingZero } from 'common/util'
 
 const MAX_TIME = 999
@@ -21,7 +21,7 @@ export default function TimeBoard(props) {
 
   return (
     <div className="time-board">
-      <CountBoard content={paddingZero(time)} />
+      <Board content={paddingZero(time)} />
     </div>
   )
 }

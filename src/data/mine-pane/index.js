@@ -71,7 +71,7 @@ function initMinePaneState(minePane = []) {
         id: i * row.length + j,
         value: minePane[i][j],
         mark: null,
-        open: false,
+        open: false
       }
       paneState[i][j] = item
     }

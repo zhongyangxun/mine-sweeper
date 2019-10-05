@@ -32,7 +32,8 @@ module.exports = {
             ["components", "./src/components"],
             ["containers", "./src/containers"],
             ["data", "./src/data"],
-            ["common", "./src/common"]
+            ["common", "./src/common"],
+            ["store", "./src/store"]
           ],
         }
       }

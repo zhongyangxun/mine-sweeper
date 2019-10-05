@@ -1,7 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import Square from 'components/square'
+import * as actions from 'store/action-creators'
 import { initMinePane, initMinePaneState } from 'data/mine-pane'
+import { markTypes } from './config'
 import './index.scss'
 
 class MinePane extends React.Component {
@@ -10,7 +13,9 @@ class MinePane extends React.Component {
     mineNum: PropTypes.number,
     onGameStart: PropTypes.func,
     onGameEnd: PropTypes.func,
-    playing: PropTypes.bool
+    playing: PropTypes.bool,
+    subOneMine: PropTypes.func,
+    addOneMine: PropTypes.func
   }
 
   static defaultProps = {
@@ -54,8 +59,16 @@ class MinePane extends React.Component {
     return row !== undefined && row[j] !== undefined
   }
 
+  isMarked(i, j) {
+    return Boolean(this.state.minePane[i][j].mark)
+  }
+
+  isOpened(i, j) {
+    return this.state.minePane[i][j].open
+  }
+
   open(i, j, bubble = true) {
-    if (!this.isPositionInPane(i, j) || this.state.minePane[i][j].open) {
+    if (!this.isPositionInPane(i, j) || this.isOpened(i, j) || this.isMarked(i, j)) {
       return
     }
 
@@ -81,14 +94,17 @@ class MinePane extends React.Component {
   }
 
   mark(i, j) {
+    const { FLAG, QUESTION } = markTypes
     const { minePane } = this.state
     let itemMark = minePane[i][j].mark
 
     if (itemMark === null) {
-      itemMark = 'flag'
-    } else if (itemMark === 'flag') {
-      itemMark = 'question'
-    } else if (itemMark === 'question') {
+      itemMark = FLAG
+      this.props.subOneMine()
+    } else if (itemMark === FLAG) {
+      itemMark = QUESTION
+      this.props.addOneMine()
+    } else if (itemMark === QUESTION) {
       itemMark = null
     }
     minePane[i][j].mark = itemMark
@@ -149,4 +165,13 @@ class MinePane extends React.Component {
   }
 }
 
-export default MinePane
+const mapDispatchsToProps = (dispatch) => ({
+  subOneMine() {
+    dispatch(actions.subMineNum())
+  },
+  addOneMine() {
+    dispatch(actions.addMineNum())
+  }
+})
+
+export default connect(null, mapDispatchsToProps)(MinePane)
