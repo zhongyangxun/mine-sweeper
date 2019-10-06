@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import Square from 'components/square'
 import * as actions from 'store/action-creators'
 import { initMinePane, initMinePaneState } from 'data/mine-pane'
+import { sleep } from 'common/util'
+import { gameResults } from 'common/config'
 import { markTypes, MINE_SIGN } from './config'
 import './index.scss'
 
@@ -15,13 +17,19 @@ class MinePane extends React.Component {
     onGameEnd: PropTypes.func,
     playing: PropTypes.bool,
     subOneMine: PropTypes.func,
-    addOneMine: PropTypes.func
+    addOneMine: PropTypes.func,
+    waitResult: PropTypes.func,
+    sendFailResult: PropTypes.func,
+    resetResult: PropTypes.func,
+    result: PropTypes.string,
+    sendWinResult: PropTypes.func
   }
 
   static defaultProps = {
     rowNum: 9,
     mineNum: 16,
-    playing: false
+    playing: false,
+    ended: false
   }
 
   constructor(props) {
@@ -80,6 +88,9 @@ class MinePane extends React.Component {
         minePane
       }
     }, () => {
+      if (this.props.result === gameResults.WAIT) {
+        this.props.resetResult()
+      }
       const { minePane } = this.state
       const square = minePane[i][j].value
       if (bubble && square === 0) {
@@ -89,8 +100,31 @@ class MinePane extends React.Component {
   }
 
   endGame() {
-    this.openAll()
+    this.setState({
+      ended: true
+    })
     this.props.onGameEnd()
+  }
+
+  isFailed(i, j) {
+    return this.state.minePane[i][j].value === MINE_SIGN
+  }
+
+  onFail() {
+    this.openAll()
+    this.props.sendFailResult()
+    this.endGame()
+  }
+
+  isWinning() {
+    const unOpendSquaresNum = this.state.minePane.flat().filter((item) => !item.open).length
+
+    return unOpendSquaresNum === this.props.mineNum
+  }
+
+  onWin() {
+    this.props.sendWinResult()
+    this.endGame()
   }
 
   mark(i, j) {
@@ -100,10 +134,10 @@ class MinePane extends React.Component {
 
     if (itemMark === null) {
       itemMark = FLAG
-      this.props.subOneMine()
+      this.props.markMine()
     } else if (itemMark === FLAG) {
       itemMark = QUESTION
-      this.props.addOneMine()
+      this.props.unmarkMine()
     } else if (itemMark === QUESTION) {
       itemMark = null
     }
@@ -114,9 +148,12 @@ class MinePane extends React.Component {
     })
   }
 
-  handleSquareClick(i, j) {
-    if (!this.isMarked(i, j) && this.state.minePane[i][j].value === MINE_SIGN) {
-      this.endGame()
+  async handleSquareClick(i, j) {
+    this.props.waitResult()
+    await sleep(200)
+
+    if (!this.isMarked(i, j) && this.isFailed(i, j)) {
+      this.onFail()
       return
     }
 
@@ -124,7 +161,13 @@ class MinePane extends React.Component {
       this.props.onGameStart()
     }
 
+    this.props.waitResult()
+
     this.open(i, j)
+
+    if (!this.isMarked(i, j) && this.isWinning()) {
+      this.onWin()
+    }
   }
 
   handleSquareContextMenu(i, j, e) {
@@ -143,9 +186,11 @@ class MinePane extends React.Component {
       gridTemplateRows: `repeat(${this.props.rowNum}, 30px)`
     }
 
+    const endedClass = this.state.ended ? 'ended' : ''
+
     return (
       <div
-        className={`mine-pane row-${this.props.rowNum}`}
+        className={`mine-pane row-${this.props.rowNum} ${endedClass}`}
         style={paneGridStyle}
       >
           {
@@ -165,13 +210,27 @@ class MinePane extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => state
+
 const mapDispatchsToProps = (dispatch) => ({
-  subOneMine() {
-    dispatch(actions.subMineNum())
+  unmarkMine() {
+    dispatch(actions.unmarkMine())
   },
-  addOneMine() {
-    dispatch(actions.addMineNum())
+  markMine() {
+    dispatch(actions.markMine())
+  },
+  waitResult() {
+    dispatch(actions.waitResult())
+  },
+  resetResult() {
+    dispatch(actions.resetResult())
+  },
+  sendFailResult() {
+    dispatch(actions.sendFailResult())
+  },
+  sendWinResult() {
+    dispatch(actions.sendWinResult())
   }
 })
 
-export default connect(null, mapDispatchsToProps)(MinePane)
+export default connect(mapStateToProps, mapDispatchsToProps)(MinePane)

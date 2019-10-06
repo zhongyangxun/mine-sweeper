@@ -24,7 +24,7 @@ MineCounter.defaultProps = {
 }
 
 const mapStateToProps = (state) => ({
-  content: paddingZero(state.mineNum)
+  content: paddingZero(state.unmarkedMineNum)
 })
 
 export default connect(mapStateToProps)(MineCounter)

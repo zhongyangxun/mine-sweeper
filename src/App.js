@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import MinePane from 'containers/mine-pane'
 import TimeBoard from 'containers/time-board'
 import MineCounter from 'components/mine-counter'
+import GameResult from 'containers/game-result'
 import store from 'store'
 
 class App extends React.Component {
@@ -34,7 +35,7 @@ class App extends React.Component {
           <div className="panel">
             <div className="status">
               <MineCounter />
-              <div className="result"></div>
+              <GameResult />
               <TimeBoard timing={this.state.playing} />
             </div>
             <MinePane

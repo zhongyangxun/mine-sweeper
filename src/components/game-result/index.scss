@@ -1,0 +1,10 @@
+.game-result {
+  background-size: 100%;
+  width: 32px;
+
+  @each $status in ('normal', 'wait', 'fail', 'win') {
+    &.game-result-#{$status} {
+      background-image: url(./images/#{$status}.png);
+    }
+  }
+}

@@ -24,6 +24,7 @@ module.exports = {
       "quotes": ["error", "single"],
       "comma-dangle": ["error", "never"],
       "no-plusplus": "off",
+      "no-underscore-dangle": "off"
     },
     "settings": {
       "import/resolver": {
