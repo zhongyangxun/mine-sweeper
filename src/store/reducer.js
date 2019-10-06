@@ -5,12 +5,12 @@ const reducer = (state, action) => {
   switch (action.type) {
     case actionTypes.SUB_MINE_NUM: {
       const newState = deepCopy(state)
-      newState.rowNum--
+      newState.mineNum--
       return newState
     }
     case actionTypes.ADD_MINE_NUM: {
       const newState = deepCopy(state)
-      newState.rowNum++
+      newState.mineNum++
       return newState
     }
     default:
