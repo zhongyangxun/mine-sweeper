@@ -22,13 +22,17 @@ function Square(props) {
 
   return (
     <div
-      className={`square ${computedClasses.openClass} ${computedClasses.markType}` }
+      className={`square ${computedClasses.markType} ${computedClasses.openClass}` }
       onClick={() => { props.onSquareClick() }}
       onContextMenu={(e) => { props.onSquareContextMenu(e) }}
     >
-      <div className={`mine-mark ${computedClasses.markDisplay} ${computedClasses.markValue}`}>
-        {props.value}
-      </div>
+      {
+        props.open && (
+          <div className={`mine-mark ${computedClasses.markDisplay} ${computedClasses.markValue}`}>
+            {props.value}
+          </div>
+        )
+      }
     </div>
   )
 }
