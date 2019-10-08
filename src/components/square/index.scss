@@ -5,7 +5,7 @@
 
   @each $mark in (flag, question) {
     &.mark-#{$mark} {
-      background-image: url('./images/#{$mark}.svg');
+      background-image: url('./images/#{$mark}.png');
       background-size: 100%;
     }
   }
@@ -34,7 +34,7 @@
     }
 
     &.mine-mark-m {
-      background: red url(./images/boom.svg) center center/70% no-repeat;
+      background: red url(./images/boom.png) center center/70% no-repeat;
       color: transparent;
     }
 
