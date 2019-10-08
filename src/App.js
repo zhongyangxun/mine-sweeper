@@ -5,6 +5,7 @@ import MinePane from 'containers/mine-pane'
 import TimeBoard from 'containers/time-board'
 import MineCounter from 'components/mine-counter'
 import GameResult from 'containers/game-result'
+import Menu from 'components/menu'
 import store from 'store'
 
 class App extends React.Component {
@@ -33,6 +34,7 @@ class App extends React.Component {
       <Provider store={store}>
         <div className="app">
           <div className="panel">
+            <Menu/>
             <div className="status">
               <MineCounter />
               <GameResult />

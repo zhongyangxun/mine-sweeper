@@ -126,6 +126,7 @@ class MinePane extends React.Component {
   onWin() {
     this.props.sendWinResult()
     this.endGame()
+    window.alert('win')
   }
 
   mark(i, j) {

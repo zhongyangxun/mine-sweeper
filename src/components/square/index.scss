@@ -1,6 +1,6 @@
 .square {
   background-color: #C0C0C0;
-  border: 2px outset;
+  border: 3px outset;
   display: flex;
 
   @each $mark in (flag, question) {
@@ -12,7 +12,7 @@
 
   &.open {
     background-image: none;
-    border: 1px inset;
+    border: 2px inset;
   }
 
   .mine-mark {

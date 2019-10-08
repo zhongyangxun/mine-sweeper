@@ -1,0 +1,39 @@
+.menu {
+  display: flex;
+  margin-bottom: 3px;
+
+  .item {
+    cursor: pointer;
+  }
+
+  > .item {
+    text-decoration: underline;
+    padding: 3px 8px;
+    font-size: 14px;
+    position: relative;
+
+    &:hover {
+      border: 1px outset;
+      padding: 2px 7px;
+    }
+  }
+
+  .menu-sub {
+    display: none;
+    position: absolute;
+    border: 1px outset;
+    z-index: 10;
+    background-color: #C0C0C0;
+    left: -2px;
+
+    .item {
+      width: 100px;
+      padding: 5px 15px;
+
+      &:hover {
+        color: #fff;
+        background-color: #33407F;
+      }
+    }
+  }
+}
