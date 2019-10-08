@@ -16,13 +16,14 @@ class MinePane extends React.Component {
     onGameStart: PropTypes.func,
     onGameEnd: PropTypes.func,
     playing: PropTypes.bool,
-    subOneMine: PropTypes.func,
-    addOneMine: PropTypes.func,
+    markMine: PropTypes.func,
+    unmarkMine: PropTypes.func,
     waitResult: PropTypes.func,
     sendFailResult: PropTypes.func,
     resetResult: PropTypes.func,
     result: PropTypes.string,
-    sendWinResult: PropTypes.func
+    sendWinResult: PropTypes.func,
+    unmarkedMineNum: PropTypes.number
   }
 
   static defaultProps = {
@@ -133,6 +134,9 @@ class MinePane extends React.Component {
     let itemMark = minePane[i][j].mark
 
     if (itemMark === null) {
+      if (this.props.unmarkedMineNum === 0) {
+        return
+      }
       itemMark = FLAG
       this.props.markMine()
     } else if (itemMark === FLAG) {
