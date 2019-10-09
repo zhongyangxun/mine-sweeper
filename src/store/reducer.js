@@ -37,6 +37,25 @@ const reducer = (state, action) => {
       return newState
     }
 
+    case actionTypes.SET_GAME_GRADE: {
+      const { ROW_NUM, MINE_NUM } = action.value
+      newState.rowNum = ROW_NUM
+      newState.mineNum = MINE_NUM
+      newState.unmarkedMineNum = MINE_NUM
+      return newState
+    }
+
+    case actionTypes.TOGGLE_PLAYING_STATUS: {
+      newState.playing = !state.playing
+      return newState
+    }
+
+    case actionTypes.RESET_GAME: {
+      newState.playing = false
+      newState.unmarkedMineNum = newState.mineNum
+      return newState
+    }
+
     default:
       return state
   }

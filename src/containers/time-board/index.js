@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Board from 'components/board'
 import { paddingZero } from 'common/util'
@@ -6,7 +7,7 @@ import { paddingZero } from 'common/util'
 const MAX_TIME = 999
 let timer = null
 
-export default function TimeBoard(props) {
+function TimeBoard(props) {
   const [time, setTime] = useState(0)
 
   useEffect(() => {
@@ -33,3 +34,9 @@ TimeBoard.propTypes = {
 TimeBoard.defaultProps = {
   timing: false
 }
+
+const mapStateToProps = (state) => ({
+  timing: state.playing
+})
+
+export default connect(mapStateToProps)(TimeBoard)

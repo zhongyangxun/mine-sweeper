@@ -13,8 +13,6 @@ class MinePane extends React.Component {
   static propTypes = {
     rowNum: PropTypes.number,
     mineNum: PropTypes.number,
-    onGameStart: PropTypes.func,
-    onGameEnd: PropTypes.func,
     playing: PropTypes.bool,
     markMine: PropTypes.func,
     unmarkMine: PropTypes.func,
@@ -23,7 +21,8 @@ class MinePane extends React.Component {
     resetResult: PropTypes.func,
     result: PropTypes.string,
     sendWinResult: PropTypes.func,
-    unmarkedMineNum: PropTypes.number
+    unmarkedMineNum: PropTypes.number,
+    togglePlayingStatus: PropTypes.func
   }
 
   static defaultProps = {
@@ -37,6 +36,15 @@ class MinePane extends React.Component {
     super(props)
     this.state = {
       minePane: initMinePaneState(initMinePane(props.rowNum, props.mineNum))
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { rowNum, mineNum } = this.props
+    if (prevProps.rowNum !== rowNum || prevProps.mineNum !== mineNum) {
+      this.setState({
+        minePane: initMinePaneState(initMinePane(rowNum, mineNum))
+      })
     }
   }
 
@@ -104,7 +112,7 @@ class MinePane extends React.Component {
     this.setState({
       ended: true
     })
-    this.props.onGameEnd()
+    this.props.togglePlayingStatus()
   }
 
   isFailed(i, j) {
@@ -163,7 +171,7 @@ class MinePane extends React.Component {
     }
 
     if (!this.props.playing) {
-      this.props.onGameStart()
+      this.props.togglePlayingStatus()
     }
 
     this.props.waitResult()
@@ -179,7 +187,7 @@ class MinePane extends React.Component {
     e.preventDefault()
 
     if (!this.props.playing) {
-      this.props.onGameStart()
+      this.props.togglePlayingStatus()
     }
     this.mark(i, j)
   }
@@ -235,6 +243,9 @@ const mapDispatchsToProps = (dispatch) => ({
   },
   sendWinResult() {
     dispatch(actions.sendWinResult())
+  },
+  togglePlayingStatus() {
+    dispatch(actions.togglePlayingStatus())
   }
 })
 

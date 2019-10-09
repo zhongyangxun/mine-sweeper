@@ -25,3 +25,16 @@ export const sendFailResult = () => ({
 export const sendWinResult = () => ({
   type: actionTypes.SEND_WIN_RESULT
 })
+
+export const setGameGrade = (grade) => ({
+  type: actionTypes.SET_GAME_GRADE,
+  value: grade
+})
+
+export const togglePlayingStatus = () => ({
+  type: actionTypes.TOGGLE_PLAYING_STATUS
+})
+
+export const resetGame = () => ({
+  type: actionTypes.RESET_GAME
+})

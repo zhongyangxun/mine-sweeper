@@ -7,15 +7,28 @@
   }
 
   > .item {
-    text-decoration: underline;
-    padding: 3px 8px;
-    font-size: 14px;
     position: relative;
 
     &:hover {
-      border: 1px outset;
-      padding: 2px 7px;
+      .name {
+        border: 1px outset;
+        padding: 2px 7px;
+      }
+
+      .menu-sub {
+        display: block;
+      }
     }
+  }
+
+  .name {
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    text-decoration: underline;
+    padding: 3px 8px;
+    font-size: 14px;
   }
 
   .menu-sub {
@@ -29,8 +42,10 @@
     .item {
       width: 100px;
       padding: 5px 15px;
+      font-size: 14px;
 
-      &:hover {
+      &:hover,
+      &.active {
         color: #fff;
         background-color: #33407F;
       }
