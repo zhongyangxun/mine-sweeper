@@ -1,51 +1,55 @@
-import Menu from 'components/menu'
-import { connect } from 'react-redux'
-import { setGameGrade, resetGame } from 'store/action-creators'
-import { gameGrades } from 'common/config'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import './index.scss'
 
-const { JUNIOR_GRADE, MIDDLE_GRADE, SENIOR_GRADE } = gameGrades
+function Menu(props) {
+  const [activeIndexs, setActiveIndexs] = useState(new Array(props.menu.length))
 
-const menu = [
-  {
-    title: '游戏',
-    callback: null,
-    submenu: [
+  const handleSubMenuClick = (subItem, subIndex, index) => {
+    subItem.callback(props)
+    const newActiveIndexs = Array.from(activeIndexs)
+    newActiveIndexs[index] = subIndex
+    setActiveIndexs(newActiveIndexs)
+  }
+
+  return (
+    <div className="menu">
       {
-        title: '初级',
-        callback: (props) => {
-          props.setGameGrade(JUNIOR_GRADE)
-        }
-      },
-      {
-        title: '中级',
-        callback: (props) => {
-          props.setGameGrade(MIDDLE_GRADE)
-        }
-      },
-      {
-        title: '高级',
-        callback: (props) => {
-          props.setGameGrade(SENIOR_GRADE)
-        }
+        props.menu.map((item, index) => (
+          <div className="item" key={index}>
+            <div className="name" >{item.title}</div>
+            {
+              item.submenu
+                ? (
+                  <div className="menu-sub">
+                      {
+                        item.submenu.map((subItem, subIndex) => (
+                        <div
+                          className={`item ${activeIndexs[index] === subIndex && 'active'}`}
+                          key={subIndex}
+                            onClick={() => { handleSubMenuClick(subItem, subIndex, index) }}
+                        >
+                          {subItem.title}
+                        </div>
+                        ))
+                      }
+                    </div>
+                )
+                : null
+            }
+          </div>
+        ))
       }
-    ]
-  },
-  {
-    title: '关于',
-    callback: null
-  }
-]
+    </div>
+  )
+}
 
-const mapStateToProps = () => ({
-  menu
-})
+Menu.propTypes = {
+  menu: PropTypes.array
+}
 
-const mapDispatchesToProps = (dispatch) => ({
-  setGameGrade(grade) {
-    dispatch(setGameGrade(grade))
-    dispatch(resetGame())
-  }
-})
+Menu.defaultProps = {
+  menu: []
+}
 
-
-export default connect(mapStateToProps, mapDispatchesToProps)(Menu)
+export default Menu

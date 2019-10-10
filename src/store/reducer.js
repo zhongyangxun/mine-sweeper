@@ -42,6 +42,7 @@ const reducer = (state, action) => {
       newState.rowNum = ROW_NUM
       newState.mineNum = MINE_NUM
       newState.unmarkedMineNum = MINE_NUM
+      newState.playing = false
       return newState
     }
 

@@ -5,7 +5,7 @@ import MinePane from 'containers/mine-pane'
 import TimeBoard from 'containers/time-board'
 import MineCounter from 'components/mine-counter'
 import GameResult from 'containers/game-result'
-import Menu from 'containers/menu'
+import GameMenu from 'containers/game-menu'
 import store from 'store'
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
     <Provider store={store}>
       <div className="app">
         <div className="panel">
-          <Menu/>
+          <GameMenu/>
           <div className="status">
             <MineCounter />
             <GameResult />

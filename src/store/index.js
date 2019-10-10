@@ -9,8 +9,7 @@ const defaultState = {
   mineNum: MINE_NUM,
   unmarkedMineNum: MINE_NUM,
   result: gameResults.NOT_YET,
-  playing: false,
-  reset: false
+  playing: false
 }
 
 const store = createStore(
