@@ -5,19 +5,25 @@ const gameResults = {
   WIN: 'win'
 }
 
+const gradeKeys = {
+  JUNIOR: 'JUNIOR',
+  MIDDLE: 'MIDDLE',
+  SENIOR: 'SENIOR'
+}
+
 const gameGrades = {
-  JUNIOR_GRADE: {
+  [gradeKeys.JUNIOR]: {
     ROW_NUM: 9,
     MINE_NUM: 16
   },
-  MIDDLE_GRADE: {
+  [gradeKeys.MIDDLE]: {
     ROW_NUM: 16,
     MINE_NUM: 40
   },
-  SENIOR_GRADE: {
+  [gradeKeys.SENIOR]: {
     ROW_NUM: 25,
     MINE_NUM: 99
   }
 }
 
-export { gameResults, gameGrades }
+export { gameResults, gradeKeys, gameGrades }

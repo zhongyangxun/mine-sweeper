@@ -1,44 +1,43 @@
 import Menu from 'containers/menu'
 import { connect } from 'react-redux'
 import { setGameGrade } from 'store/action-creators'
-import { gameGrades } from 'common/config'
+import { gradeKeys } from 'common/config'
 
-const { JUNIOR_GRADE, MIDDLE_GRADE, SENIOR_GRADE } = gameGrades
+const { JUNIOR, MIDDLE, SENIOR } = gradeKeys
 
-const menu = [
-  {
-    title: '游戏',
-    callback: null,
-    submenu: [
-      {
-        title: '初级',
-        callback: (props) => {
-          props.setGameGrade(JUNIOR_GRADE)
-        }
-      },
-      {
-        title: '中级',
-        callback: (props) => {
-          props.setGameGrade(MIDDLE_GRADE)
-        }
-      },
-      {
-        title: '高级',
-        callback: (props) => {
-          props.setGameGrade(SENIOR_GRADE)
-        }
+const menu = {
+  title: '游戏',
+  activeInex: 0,
+  submenu: [
+    {
+      title: '初级',
+      callback: (props) => {
+        props.setGameGrade(JUNIOR)
       }
-    ]
-  },
-  {
-    title: '关于',
-    callback: null
-  }
-]
+    },
+    {
+      title: '中级',
+      callback: (props) => {
+        props.setGameGrade(MIDDLE)
+      }
+    },
+    {
+      title: '高级',
+      callback: (props) => {
+        props.setGameGrade(SENIOR)
+      }
+    }
+  ]
+}
 
-const mapStateToProps = () => ({
-  menu
-})
+const mapStateToProps = (state) => {
+  const { grade } = state
+  menu.activeIndex = Object.keys(gradeKeys).indexOf(grade)
+
+  return {
+    menu
+  }
+}
 
 const mapDispatchesToProps = (dispatch) => ({
   setGameGrade(grade) {

@@ -1,5 +1,5 @@
 import { deepCopy } from 'common/util'
-import { gameResults } from 'common/config'
+import { gameResults, gameGrades } from 'common/config'
 import * as actionTypes from './action-types'
 
 const reducer = (state, action) => {
@@ -38,7 +38,8 @@ const reducer = (state, action) => {
     }
 
     case actionTypes.SET_GAME_GRADE: {
-      const { ROW_NUM, MINE_NUM } = action.value
+      const grade = action.value
+      const { ROW_NUM, MINE_NUM } = gameGrades[grade]
       newState.rowNum = ROW_NUM
       newState.mineNum = MINE_NUM
       newState.unmarkedMineNum = MINE_NUM

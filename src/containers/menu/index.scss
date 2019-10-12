@@ -1,27 +1,19 @@
 .menu {
-  display: flex;
-  margin-bottom: 3px;
+  position: relative;
 
-  .item {
-    cursor: pointer;
-  }
+  &:hover {
+    .title {
+      border: 1px outset;
+      padding: 2px 7px;
+      display: inline-block;
+    }
 
-  > .item {
-    position: relative;
-
-    &:hover {
-      .name {
-        border: 1px outset;
-        padding: 2px 7px;
-      }
-
-      .menu-sub {
-        display: block;
-      }
+    .menu-sub {
+      display: block;
     }
   }
 
-  .name {
+  .title {
     cursor: pointer;
     background-color: transparent;
     border: 0;
@@ -40,6 +32,7 @@
     left: -2px;
 
     .item {
+      cursor: pointer;
       width: 100px;
       padding: 5px 15px;
       font-size: 14px;
