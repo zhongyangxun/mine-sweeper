@@ -8,17 +8,17 @@ import { gameResults } from 'common/config'
 const MAX_TIME = 999
 let timer = null
 
-function TimeBoard(props) {
+function TimeBoard({ timing = false, result }) {
   const [time, setTime] = useState(0)
 
   useEffect(() => {
-    if (!props.timing && props.result === gameResults.NOT_YET) {
+    if (!timing && result === gameResults.NOT_YET) {
       setTime(0)
       clearTimeout(timer)
       return
     }
 
-    if (time >= MAX_TIME || !props.timing) {
+    if (time >= MAX_TIME || !timing) {
       clearTimeout(timer)
       return
     }
@@ -26,7 +26,7 @@ function TimeBoard(props) {
     timer = setTimeout(() => {
       setTime(time + 1)
     }, 1000)
-  }, [props.timing, props.result, time])
+  }, [timing, result, time])
 
   return (
     <div className="time-board">
