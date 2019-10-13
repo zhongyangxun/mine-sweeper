@@ -1,11 +1,11 @@
-import Menu from 'containers/menu'
-import { connect } from 'react-redux'
-import { setGameGrade } from 'store/action-creators'
+import Menu from 'containers/menu-item'
+import { connect, batch } from 'react-redux'
+import { setGameGrade, resetGame } from 'store/action-creators'
 import { gradeKeys } from 'common/config'
 
 const { JUNIOR, MIDDLE, SENIOR } = gradeKeys
 
-const menu = {
+const menuItem = {
   title: '游戏',
   activeInex: 0,
   submenu: [
@@ -32,18 +32,20 @@ const menu = {
 
 const mapStateToProps = (state) => {
   const { grade } = state
-  menu.activeIndex = Object.keys(gradeKeys).indexOf(grade)
+  menuItem.activeIndex = Object.keys(gradeKeys).indexOf(grade)
 
   return {
-    menu
+    data: menuItem
   }
 }
 
 const mapDispatchesToProps = (dispatch) => ({
   setGameGrade(grade) {
-    dispatch(setGameGrade(grade))
+    batch(() => {
+      dispatch(setGameGrade(grade))
+      dispatch(resetGame())
+    })
   }
 })
-
 
 export default connect(mapStateToProps, mapDispatchesToProps)(Menu)

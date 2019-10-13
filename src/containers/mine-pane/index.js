@@ -63,12 +63,17 @@ class MinePane extends React.Component {
 
   openAll() {
     const { rowNum } = this.props
+    const { minePane } = this.state
 
     for (let i = 0; i < rowNum; i++) {
       for (let j = 0; j < rowNum; j++) {
-        this.open(i, j, false)
+        if (!minePane[i][j].open) minePane[i][j].open = true
       }
     }
+
+    this.setState({
+      minePane
+    })
   }
 
   isPositionInPane(i, j) {
@@ -162,6 +167,10 @@ class MinePane extends React.Component {
   }
 
   async handleSquareClick(i, j) {
+    if (this.isOpened(i, j)) {
+      return
+    }
+
     this.props.waitResult()
     await sleep(200)
 
@@ -195,15 +204,13 @@ class MinePane extends React.Component {
   render() {
     const paneGridStyle = {
       display: 'grid',
-      gridTemplateColumns: `repeat(${this.props.rowNum}, 30px)`,
-      gridTemplateRows: `repeat(${this.props.rowNum}, 30px)`
+      gridTemplateColumns: `repeat(${this.props.rowNum}, 25px)`,
+      gridTemplateRows: `repeat(${this.props.rowNum}, 25px)`
     }
-
-    const endedClass = this.state.ended ? 'ended' : ''
 
     return (
       <div
-        className={`mine-pane row-${this.props.rowNum} ${endedClass}`}
+        className={`mine-pane row-${this.props.rowNum}`}
         style={paneGridStyle}
       >
           {

@@ -2,10 +2,11 @@ import { createStore } from 'redux'
 import { gameResults, gameGrades, gradeKeys } from 'common/config'
 import reducer from './reducer'
 
-const { MINE_NUM, ROW_NUM } = gameGrades[gradeKeys.JUNIOR]
+const defaultGrade = gradeKeys.JUNIOR
+const { MINE_NUM, ROW_NUM } = gameGrades[defaultGrade]
 
 const defaultState = {
-  grade: gradeKeys.JUNIOR,
+  grade: defaultGrade,
   rowNum: ROW_NUM,
   mineNum: MINE_NUM,
   unmarkedMineNum: MINE_NUM,

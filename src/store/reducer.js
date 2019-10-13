@@ -43,7 +43,6 @@ const reducer = (state, action) => {
       newState.rowNum = ROW_NUM
       newState.mineNum = MINE_NUM
       newState.unmarkedMineNum = MINE_NUM
-      newState.playing = false
       return newState
     }
 
@@ -55,6 +54,7 @@ const reducer = (state, action) => {
     case actionTypes.RESET_GAME: {
       newState.playing = false
       newState.unmarkedMineNum = newState.mineNum
+      newState.result = gameResults.NOT_YET
       return newState
     }
 
