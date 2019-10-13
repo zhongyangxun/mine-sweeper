@@ -55,6 +55,12 @@ const reducer = (state, action) => {
       newState.playing = false
       newState.unmarkedMineNum = newState.mineNum
       newState.result = gameResults.NOT_YET
+      newState.isStarted = false
+      return newState
+    }
+
+    case actionTypes.START_GAME: {
+      newState.isStarted = true
       return newState
     }
 

@@ -1,4 +1,4 @@
-import Menu from 'containers/menu-item'
+import MenuItem from 'containers/menu-item'
 import { connect, batch } from 'react-redux'
 import { setGameGrade, resetGame } from 'store/action-creators'
 import { gradeKeys } from 'common/config'
@@ -6,7 +6,7 @@ import { gradeKeys } from 'common/config'
 const { JUNIOR, MIDDLE, SENIOR } = gradeKeys
 
 const menuItem = {
-  title: '游戏',
+  title: '等级',
   activeInex: 0,
   submenu: [
     {
@@ -48,4 +48,4 @@ const mapDispatchesToProps = (dispatch) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchesToProps)(Menu)
+export default connect(mapStateToProps, mapDispatchesToProps)(MenuItem)

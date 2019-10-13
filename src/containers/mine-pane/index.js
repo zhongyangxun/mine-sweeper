@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import { connect, batch } from 'react-redux'
 import Square from 'components/square'
 import * as actions from 'store/action-creators'
 import { initMinePane, initMinePaneState } from 'data/mine-pane'
@@ -14,6 +14,7 @@ class MinePane extends React.Component {
     rowNum: PropTypes.number,
     mineNum: PropTypes.number,
     playing: PropTypes.bool,
+    isStarted: PropTypes.bool,
     markMine: PropTypes.func,
     unmarkMine: PropTypes.func,
     waitResult: PropTypes.func,
@@ -22,14 +23,14 @@ class MinePane extends React.Component {
     result: PropTypes.string,
     sendWinResult: PropTypes.func,
     unmarkedMineNum: PropTypes.number,
-    togglePlayingStatus: PropTypes.func
+    togglePlayingStatus: PropTypes.func,
+    startGame: PropTypes.func
   }
 
   static defaultProps = {
     rowNum: 9,
     mineNum: 16,
-    playing: false,
-    ended: false
+    playing: false
   }
 
   constructor(props) {
@@ -40,8 +41,11 @@ class MinePane extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { rowNum, mineNum } = this.props
-    if (prevProps.rowNum !== rowNum || prevProps.mineNum !== mineNum) {
+    const { rowNum, mineNum, isStarted } = this.props
+    const isGradeChanged = () => prevProps.rowNum !== rowNum
+    const isReseted = () => prevProps.isStarted && !isStarted
+
+    if (isGradeChanged() || isReseted()) {
       this.setState({
         minePane: initMinePaneState(initMinePane(rowNum, mineNum))
       })
@@ -171,16 +175,16 @@ class MinePane extends React.Component {
       return
     }
 
+    if (!this.props.isStarted) {
+      this.props.startGame()
+    }
+
     this.props.waitResult()
     await sleep(200)
 
     if (!this.isMarked(i, j) && this.isFailed(i, j)) {
       this.onFail()
       return
-    }
-
-    if (!this.props.playing) {
-      this.props.togglePlayingStatus()
     }
 
     this.props.waitResult()
@@ -196,7 +200,7 @@ class MinePane extends React.Component {
     e.preventDefault()
 
     if (!this.props.playing) {
-      this.props.togglePlayingStatus()
+      this.props.startGame()
     }
     this.mark(i, j)
   }
@@ -253,6 +257,12 @@ const mapDispatchsToProps = (dispatch) => ({
   },
   togglePlayingStatus() {
     dispatch(actions.togglePlayingStatus())
+  },
+  startGame() {
+    batch(() => {
+      dispatch(actions.togglePlayingStatus())
+      dispatch(actions.startGame())
+    })
   }
 })
 

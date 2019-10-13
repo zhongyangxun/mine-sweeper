@@ -17,3 +17,5 @@ export const SET_GAME_GRADE = 'SET_GAME_GRADE'
 export const TOGGLE_PLAYING_STATUS = 'TOGGLE_PLAYING_STATUS'
 
 export const RESET_GAME = 'RESET_GAME'
+
+export const START_GAME = 'START_GAME'

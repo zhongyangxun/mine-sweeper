@@ -38,3 +38,7 @@ export const togglePlayingStatus = () => ({
 export const resetGame = () => ({
   type: actionTypes.RESET_GAME
 })
+
+export const startGame = () => ({
+  type: actionTypes.START_GAME
+})

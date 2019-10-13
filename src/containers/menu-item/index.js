@@ -7,7 +7,7 @@ function MenuItem(props) {
 
   const handleSubMenuClick = (item, index) => {
     item.callback(props)
-    setActiveIndex(index)
+    if (activeIndex !== undefined) setActiveIndex(index)
   }
 
   return (
