@@ -171,7 +171,7 @@ class MinePane extends React.Component {
   }
 
   async handleSquareClick(i, j) {
-    if (this.isOpened(i, j)) {
+    if (this.isOpened(i, j) || this.isMarked(i, j)) {
       return
     }
 
@@ -212,9 +212,13 @@ class MinePane extends React.Component {
       gridTemplateRows: `repeat(${this.props.rowNum}, 25px)`
     }
 
+    const { WIN, FAIL } = gameResults
+    const { result } = this.props
+    const endedClass = result === WIN || result === FAIL ? 'ended' : ''
+
     return (
       <div
-        className={`mine-pane row-${this.props.rowNum}`}
+        className={`mine-pane row-${this.props.rowNum} ${endedClass}`}
         style={paneGridStyle}
       >
           {

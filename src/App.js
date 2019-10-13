@@ -10,6 +10,8 @@ import MenuItemGame from 'containers/menu-item-game'
 import store from 'store'
 
 function App() {
+  document.body.addEventListener('contextmenu', (e) => { e.preventDefault() })
+
   return (
     <Provider store={store}>
       <div className="app">
