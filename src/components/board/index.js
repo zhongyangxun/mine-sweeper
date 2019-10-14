@@ -1,12 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import digitalFont from 'resource/fonts/digital-7/digital-7-mono.ttf'
 import './index.scss'
+
+const StyleWrapper = styled.div`
+  @font-face {
+    font-family: 'digital';
+    src: url(${digitalFont});
+  }
+
+  .board {
+    font-family: digital;
+  }
+`
 
 function Board(props) {
   return (
-    <div className="board">
-      {props.content}
-    </div>
+    <StyleWrapper>
+      <div className="board">
+        {props.content}
+      </div>
+    </StyleWrapper>
   )
 }
 
