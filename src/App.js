@@ -20,7 +20,7 @@ function App() {
             <MenuItemGrade />
             <MenuItemGame />
           </div>
-          <div className="status">
+          <div className="status border">
             <MineCounter />
             <GameResult />
             <TimeBoard />

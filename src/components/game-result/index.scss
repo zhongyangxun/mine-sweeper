@@ -1,6 +1,7 @@
 .game-result {
   background-size: 100%;
   width: 32px;
+  height: 32px;
 
   @each $status in ('normal', 'wait', 'fail', 'win') {
     &.game-result-#{$status} {

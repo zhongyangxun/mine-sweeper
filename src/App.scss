@@ -24,12 +24,19 @@ body {
     display: flex;
     background-color: inherit;
     justify-content: space-evenly;
+    align-items: center;
     padding: 15px;
-    border: 3px outset;
     margin-bottom: 20px;
   }
 
   .menu {
     display: flex;
+  }
+
+  .border {
+    border: 2px outset;
+    border-top-color: #eee;
+    border-right-color: #bebebe;
+    border-bottom-color: #f1f1f1;
   }
 }

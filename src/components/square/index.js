@@ -22,7 +22,7 @@ function Square(props) {
 
   return (
     <div
-      className={`square ${computedClasses.markType} ${computedClasses.openClass}` }
+      className={`square border ${computedClasses.markType} ${computedClasses.openClass}` }
       onClick={() => { props.onSquareClick() }}
       onContextMenu={(e) => { props.onSquareContextMenu(e) }}
     >
